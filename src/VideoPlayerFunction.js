@@ -1,12 +1,13 @@
-import React, {useEffect } from "react";
+import React, { useEffect } from "react";
 import { Cloudinary } from "cloudinary-core";
 import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
-
 function VideoPlayerFunction(props) {
-  
-  const cloudinary = new Cloudinary({ cloud_name: props.options.cloudName, secure: true });
+  const cloudinary = new Cloudinary({
+    cloud_name: props.options.cloudName,
+    secure: true,
+  });
   const videoPlayerInit = () => {
     debugger;
     console.log("calling debugger");
@@ -16,17 +17,17 @@ function VideoPlayerFunction(props) {
       controls: true,
       preload: "auto",
       mute: true,
-      autoplay: false    
+      autoplay: false,
     });
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     debugger;
     console.log("calling useEffect");
-   videoPlayerInit();
+    videoPlayerInit();
   });
   debugger;
-  console.log("calling fn render")
+  console.log("calling fn render");
   return (
     <>
       <div className="vp">

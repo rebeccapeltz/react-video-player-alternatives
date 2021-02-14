@@ -44,10 +44,6 @@ function VideoPlayerContext() {
     <>
       <div className="vp">
         <video className="context-video" />
-        <p>
-          Video is rendered: {videoOptions.cloudName}
-         
-        </p>
       </div>
     </>
   );
