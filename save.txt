@@ -1,0 +1,4 @@
+  src="https://player.cloudinary.com/embed/?public_id=race_road_car&cloud_name=demo&player%5Bfluid%5D=true&player%5Bcontrols%5D=true&source%5Bsource_types%5D%5B0%5D=mp4"
+
+
+  player[fluid]=true&player[controls]=true&source[source_types][0]=mp4
