@@ -3,7 +3,7 @@ import { Cloudinary } from "cloudinary-core";
 import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
-export const useVideoPlayer  = (props) =>{
+export const useCloudinaryVideoPlayer  = (props) =>{
   // debugger;
   const [cloudName] = useState(props.cloudName);
   const [publicId] = useState(props.publicId);

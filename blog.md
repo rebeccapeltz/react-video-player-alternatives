@@ -87,7 +87,7 @@ We're going to look at different ways to host the Cloudinary Video Player by bui
 - Class based component
 - Function based based with useHooks
 - Function based component with Context
-- Custom hook `useVideoPlayer` that can be used in any component that hosts video
+- Custom hook `useCloudinaryVideoPlayer` that can be used in any component that hosts video
 
 ### App.js
 
@@ -428,3 +428,96 @@ export default VideoPlayerContext;
 The fact that we don't and shouldn't change the cloud name and public id for the video indicates that using Context is not a good idea when working with the video player.  If we were to call `setVideoOptions` we would call `setVideoOptions`.  This would trigger a re-render of the `VideoPlayerContext` component because `useEffect` is run when the state is changed.  Re-rendering the component would reinitialize the video player which is not desirable. 
 
 ### Custom Hook
+
+We have seen code duplicated across several of these component examples: 
+- library imports
+- init video player function
+- cloudinary instantiation
+The expected reaction to this is 'how can I reactor?'.  The answer is to create a custom hook.  
+
+The convention for naming hooks is to prefix that functionality you're capturing with `use`, so we'll create a `useCloudinaryVideoPlayer` hook.
+
+Because we have used different classes for each of the sample, we need our hook to work with arguments and maintain state for
+
+- cloud name
+- public id
+- class name of video tag which we use as an element selector
+
+Other than pulling these variables out, the code looks like the functional components we've created already.
+
+```javascript
+import { useState, useEffect } from 'react';
+import { Cloudinary } from "cloudinary-core";
+import "cloudinary-video-player/dist/cld-video-player.light.min";
+import "cloudinary-video-player/dist/cld-video-player.light.min.css";
+
+export const useCloudinaryVideoPlayer  = (props) =>{
+  // debugger;
+  const [cloudName] = useState(props.cloudName);
+  const [publicId] = useState(props.publicId);
+  const [className] = useState(props.videoClass);
+
+  const cloudinary = new Cloudinary({
+    cloud_name: cloudName,
+    secure: true,
+  });
+
+  const videoPlayerInit = () => {
+    return cloudinary.videoPlayer(document.querySelector(`.${className}`), {
+      publicId: publicId,
+      fluid: true,
+      controls: true,
+      preload: "auto",
+      mute: true,
+      autoplay: false    
+    });
+  };
+
+  useEffect(() => {
+    videoPlayerInit();
+  });
+
+  return "OK";
+}
+```
+
+We don't bother capturing the setters because we're not going to use them. `App.js` will continue to pass an object containing just cloud name and public id. 
+
+```html
+<div className="video-card">
+    <h2>Video Player Custom Hook</h2>
+    <div className="vp">
+      <VideoPlayerCustomHook options={videoOptions} />
+    </div>
+</div>
+```
+
+In the new `VideoPlayerCustomHooks` component we'll add class name to the object that get's passed to the `useCloudinaryVideoPlayer` hook.
+
+```JavaScript
+import React from "react";
+import { useCloudinaryVideoPlayer } from "./useCloudinaryVideoPlayer";
+
+function VideoPlayerCustomHook(props) {
+  const videoClass = "custom-video";
+  debugger;
+  useCloudinaryVideoPlayer({ ...props.options, videoClass: videoClass });
+
+  return (
+    <>
+      <video className={videoClass} />
+    </>
+  );
+}
+
+export default VideoPlayerCustomHook;
+```
+
+The actual Video player component code is much simpler now that it can import the reusable code from the hook.  The video class is added to a new object that includes the props and serves as a parameter for the custom hook.
+
+
+## Conclusion
+
+There are many ways to create a component with React and therefore many ways to create a component that hosts the Cloudinary Video player.  
+
+How do you choose which way is the best way?  If you are using class based components, you may want to use the one presented here, although you can introduce function based components into an app that uses class based components.  If you will be creating multiple components that just differ by some data, you may want to create a custom hook.  It's probably not the best use case, but you can use context with a functional component.  In general, the direction forward with React is to use function based components with hooks.
