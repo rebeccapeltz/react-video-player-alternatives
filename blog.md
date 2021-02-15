@@ -1,4 +1,4 @@
-# Integrating Cloudinary Video Player into a React Application
+# Integrating Cloudinary Video Player into a React Application: 5 Alternatives
 
 As of this writing [npm trends](https://www.npmtrends.com/react) reports over 10,000 daily downloads of the React library. The [disruption created by Covid in 2020](https://www.weforum.org/agenda/2020/05/coronavirus-covid19-consumers-shopping-goods-economics-industry) is expected to persist. This disruption created consumer demand for video to improve work, shopping, education, healthcare, social intercourse, and entertainment.
 
@@ -83,11 +83,11 @@ We'll also create a **custom hook**. Custom hooks are useful for refactoring sta
 
 We're going to look at different ways to host the Cloudinary Video Player by building components that manage state, logic and event handling.
 
-- Function based component with iframe for embedded cloud hosted video player
-- Class based component
-- Function based based with useHooks
-- Function based component with Context
-- Custom hook `useCloudinaryVideoPlayer` that can be used in any component that hosts video
+1. Function based component with iframe for embedded cloud hosted video player
+2. Class based component
+3.  Function based based with useHooks
+4. Function based component with Context
+5. Custom hook `useCloudinaryVideoPlayer` that can be used in any component that hosts video
 
 ### App.js
 
@@ -98,7 +98,7 @@ The external data for all of the components in this exercise is defined in `App.
 
 ```
 
-### Function based Cloud Hosted Video Player
+### 1. Function based Cloud Hosted Video Player
 
 Cloudinary provides a [demo page](https://studio.cloudinary.com/) where you can experiment with Video Player options. Once you are satisfied with the features you have selected, the demo will provide the JavaScript or an embeddable `iframe` with the options set for hosting in the cloud. With this options, you will get a URL with all of the settings including the 2 pieces of data that are required for specifying an asset in Cloudinary; cloud name and the asset's public id.
 
@@ -178,8 +178,9 @@ We do need to add some CSS for a responsive iframe.
   border: none;
 }
 ```
+There are a few downsides to using and embedded video player, especially in production: you may not have as much control as you would like and it may load slower depending on network conditions.
 
-### Class Based Component
+### 2. Class Based Component
 
 In `app.js`, we import our Class based video player and render a card that uses the `VideoPlayerClass` component.
 
@@ -254,7 +255,7 @@ export default VideoPlayerClass;
 
 ```
 
-### Function Based Component
+### 3. Function Based Component
 
 We saw a function based component structure in the Cloud Hosted example.  Now we need to load the libraries and deal with waiting for the video tag to render in a function based approach.  
 
@@ -320,7 +321,7 @@ function VideoPlayerFunction(props) {
 export default VideoPlayerFunction;
 ```
 
-Function Based Component with Context
+### 4. Function Based Component with Context
 
 React provides a hook, `useContext` that includes both `useState` and `Provider` function. The convention for naming the provider is to use the same name as the context object.  In our case we'll have a `VideoOptionsContext` and a `VideoOptionsProvider`. This hook can be used to share logic and state between components.  
 
@@ -427,7 +428,7 @@ export default VideoPlayerContext;
 
 The fact that we don't and shouldn't change the cloud name and public id for the video indicates that using Context is not a good idea when working with the video player.  If we were to call `setVideoOptions` we would call `setVideoOptions`.  This would trigger a re-render of the `VideoPlayerContext` component because `useEffect` is run when the state is changed.  Re-rendering the component would reinitialize the video player which is not desirable. 
 
-### Custom Hook
+### 5. Function based with Custom Hook
 
 We have seen code duplicated across several of these component examples: 
 - library imports
