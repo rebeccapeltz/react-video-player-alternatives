@@ -1,8 +1,8 @@
+import React from "react";
 import "./App.css";
 import VideoPlayerClass from "./VideoPlayerClass";
 import VideoPlayerFunction from "./VideoPlayerFunction";
 import VideoPlayerContext from "./VideoPlayerContext";
-import React from "react";
 import { VideoOptionsProvider } from "./VideoOptionsContext";
 import VideoPlayerCloudHosted from "./VideoPlayerCloudHosted";
 import VideoPlayerCustomHook from "./VideoPlayerCustomHook";

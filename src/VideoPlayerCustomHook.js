@@ -7,13 +7,11 @@ import { useVideoPlayer } from "./useVideoPlayer";
 function VideoPlayerCustomHook(props) {
   const videoClass = "custom-video";
   debugger;
-  useVideoPlayer({...props.options,videoClass:videoClass});
-  
+  useVideoPlayer({ ...props.options, videoClass: videoClass });
+
   return (
     <>
-      <div className="vp">
-        <video className="custom-video" />
-      </div>
+      <video className="custom-video" />
     </>
   );
 }

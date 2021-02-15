@@ -127,7 +127,7 @@ function VideoPlayerCloudHosted(props) {
 
   return (
     <>
-    <div class="iframe-container">
+    <div className="iframe-container">
       <iframe className="responsive-iframe"
         title="Cloud Hosted Video Player"
         src={url}
@@ -146,7 +146,7 @@ export default VideoPlayerCloudHosted;
 
 All we are doing in this functional component is rendering the iframe.  We pass along the `videoOptions` data. 
 
-```JavaScript
+```html
  {
 <div className="video-card">
   <h2>Video Player Cloud Hosted</h2>
@@ -207,6 +207,8 @@ import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 Next we render the `VideoPlayerClass` component in `app.js`, passing in the videoOptions.
 
+```html
+
 {
   <div className="video-card">
     <h2>Video Player in Class</h2>
@@ -215,6 +217,7 @@ Next we render the `VideoPlayerClass` component in `app.js`, passing in the vide
     </div>
   </div>
 }
+```
 
 The `videoOptions` are implicitly read into the React Class based component as `this.props.options`.  The props function matches the `options` attribute supplied in the rendering of the component.
 
@@ -242,9 +245,7 @@ class VideoPlayerClass extends Component {
   render() {
     return (
       <>
-        <div className="vp">
-          <video id="some-video" />
-        </div>
+        <video id="some-video" />
       </>
     );
   }
@@ -253,3 +254,177 @@ export default VideoPlayerClass;
 
 ```
 
+### Function Based Component
+
+We saw a function based component structure in the Cloud Hosted example.  Now we need to load the libraries and deal with waiting for the video tag to render in a function based approach.  
+
+We start by rendering the component in App.js.
+
+```html
+{
+  <div className="video-card">
+    <h2>Video Player in Function</h2>
+    <div className="vp">
+      <VideoPlayerFunction options={videoOptions} />
+    </div>
+  </div>
+}
+```
+
+Then we import libraries and this should look familiar as its the same code we used in the class based example.
+
+```JavaScript
+mport React, { useEffect } from "react";
+import { Cloudinary } from "cloudinary-core";
+import "cloudinary-video-player/dist/cld-video-player.light.min";
+import "cloudinary-video-player/dist/cld-video-player.light.min.css";
+```
+
+Next we set up a functional component.  The `videoPlayerInit` function looks the same as it did in the class based approach.  Notice that `props` are pass in to the function rather than being add to the class context implicitly as we saw in the class base function.
+
+Instead of relying on the `componentDidMount` function to tells us that the `video` tag was rendered, we use the `useEffect` functional React Hook to determine this and call the video player init function.
+
+Don't look at `useEffect` as equivalent to `componentDidMount` even though we are using them in a similar manner.  Keep in mind that `useEffect` will be called anytime the component re-renders, so the u'useEffect' functions instructions are executed as if it were called in `componentDidMound` and `componentDidUpdate` in a class base component.  Since we don't want to call the `initVideoPlayer` except when the `video` tag is first rendered, we need to guard against that.  
+
+
+```JavaScript
+function VideoPlayerFunction(props) {
+  const cloudinary = new Cloudinary({
+    cloud_name: props.options.cloudName,
+    secure: true,
+  });
+  const videoPlayerInit = () => {
+    console.log("calling debugger");
+    cloudinary.videoPlayer(document.querySelector(".fn-video"), {
+      publicId: props.options.publicId,
+      fluid: true,
+      controls: true,
+      preload: "auto",
+      mute: true,
+      autoplay: false,
+    });
+  };
+
+  useEffect(() => {
+    console.log("calling useEffect");
+    videoPlayerInit();
+  });
+  console.log("calling fn render");
+  return (
+    <>
+      <video className="fn-video" />
+    </>
+  );
+}
+
+export default VideoPlayerFunction;
+```
+
+Function Based Component with Context
+
+React provides a hook, `useContext` that includes both `useState` and `Provider` function. The convention for naming the provider is to use the same name as the context object.  In our case we'll have a `VideoOptionsContext` and a `VideoOptionsProvider`. This hook can be used to share logic and state between components.  
+
+Let's start with create the `VideoOptionsContext` component that will hold and provide access to state.  `useState` is a function that return the current value of the state and a setter function that will set a new state value.  We'll capture the options `cloudName` and `publicId` in this context.  
+
+The data is an object that contains these video options. We create the context and name it `VideoOptionsContext.
+
+```JavaScript
+const video = { options: { cloudName: "demo", publicId: "race_road_car" } };
+export const VideoOptionsContext = createContext();
+
+```
+
+Next we implement and export a `VideoOptionsProvider` which sets up state for the options.  We provide a default value for Video Options which is the `cloudName` and `publicId`.  
+
+```JavaScript
+export const VideoOptionsProvider = ({ children }) => {
+  const [videoOptions, setVideoOptions] = useState(video.options);
+
+  return (
+    <VideoOptionsContext.Provider
+      value={{
+        videoOptions,
+        setVideoOptions,
+      }}
+    >
+      {children}
+    </VideoOptionsContext.Provider>
+  );
+};
+```
+
+To use this context in a functional component, we import the `VideoOptionsContext` into `App.js` and wrap the rendering of the `VideoPlayerContext` in this Context component.
+
+```JavaScript
+import VideoPlayerContext from "./VideoPlayerContext";
+import { VideoOptionsProvider } from "./VideoOptionsContext";
+
+{
+<div className="video-card">
+  <h2>Video Player in Function with Context Provider</h2>
+  <div className="vp">
+    <VideoOptionsProvider>
+      <VideoPlayerContext />
+    </VideoOptionsProvider>
+  </div>
+</div>
+}
+```
+
+The `VideoPlayerContext` component resembles the `VideoPlayerFunction` component, except that it get the options from context rather than from props.  
+
+If you examine the code you'll note that we import the `VideoOptionsContext` and then pull the `options` with the `useContext` hook.  Then in code we can reference the options as `options.videoOptions.cloudName` and `options.videoOptions.publicId`.
+
+
+```JavaScript
+import React, { useEffect, useContext } from "react";
+import { VideoOptionsContext } from "./VideoOptionsContext";
+import { Cloudinary } from "cloudinary-core";
+import "cloudinary-video-player/dist/cld-video-player.light.min";
+import "cloudinary-video-player/dist/cld-video-player.light.min.css";
+
+function VideoPlayerContext() {
+  const options = useContext(VideoOptionsContext);
+
+  const cloudinary = new Cloudinary({
+    cloud_name: options.videoOptions.cloudName,
+    secure: true,
+  });
+  const videoPlayerInit = () => {
+    console.log("add video player JS");
+    const player = cloudinary.videoPlayer(
+      document.querySelector(".context-video"),
+      {
+        publicId: options.videoOptions.publicId,
+        fluid: true,
+        controls: true,
+        preload: "auto",
+        mute: true,
+        autoplay: false,
+      }
+    );
+
+    player.on("loadedmetadata", (e) => {
+      console.log("app detected", e);
+    });
+  };
+
+  useEffect(() => {
+    console.log("calling useEffect");
+    videoPlayerInit();
+  });
+  console.log("calling fn render");
+  return (
+    <>
+      <video className="context-video" />
+    </>
+  );
+}
+
+export default VideoPlayerContext;
+
+```
+
+The fact that we don't and shouldn't change the cloud name and public id for the video indicates that using Context is not a good idea when working with the video player.  If we were to call `setVideoOptions` we would call `setVideoOptions`.  This would trigger a re-render of the `VideoPlayerContext` component because `useEffect` is run when the state is changed.  Re-rendering the component would reinitialize the video player which is not desirable. 
+
+### Custom Hook

@@ -24,9 +24,7 @@ class VideoPlayerClass extends Component {
   render() {
     return (
       <>
-        <div className="vp">
           <video id="some-video" />
-        </div>
       </>
     );
   }

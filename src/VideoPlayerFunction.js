@@ -30,9 +30,7 @@ function VideoPlayerFunction(props) {
   console.log("calling fn render");
   return (
     <>
-      <div className="vp">
-        <video className="fn-video" />
-      </div>
+      <video className="fn-video" />
     </>
   );
 }

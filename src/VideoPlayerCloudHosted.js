@@ -5,7 +5,7 @@ function VideoPlayerCloudHosted(props) {
 
   return (
     <>
-    <div class="iframe-container">
+    <div className="iframe-container">
       <iframe className="responsive-iframe"
         title="Cloud Hosted Video Player"
         src={url}
