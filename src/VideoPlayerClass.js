@@ -4,14 +4,13 @@ import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 class VideoPlayerClass extends Component {
-  videoName = "race_road_car";
   cld = () => {
-    return new Cloudinary({ cloud_name: "demo", secure: true });
+    return new Cloudinary({ cloud_name: this.props.options.cloudName, secure: true });
   };
   videoPlayerInit = () => {
     const cld = this.cld();
     cld.videoPlayer("some-video", {
-      publicId: this.videoName,
+      publicId: this.props.options.publicId,
       fluid: true,
       controls: true,
       preload: "auto",

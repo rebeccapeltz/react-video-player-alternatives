@@ -10,7 +10,6 @@ import VideoPlayerCustomHook from "./VideoPlayerCustomHook";
 function App() {
   const videoOptions = { cloudName: "demo", publicId: "race_road_car" };
 
-  // </div>
   return (
     <div className="App">
       <h1>Video Player Sandbox</h1>
@@ -28,7 +27,7 @@ function App() {
         <div className="video-card">
           <h2>Video Player in Class</h2>
           <div className="vp">
-            <VideoPlayerClass />
+            <VideoPlayerClass options={videoOptions} />
           </div>
         </div>
       }

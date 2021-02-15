@@ -1,15 +1,21 @@
 import React from "react";
 
 function VideoPlayerCloudHosted(props) {
+  const url = `https://player.cloudinary.com/embed/?public_id=${props.options.publicId}&cloud_name=${props.options.cloudName}&player%5Bfluid%5D=true&player%5Bcontrols%5D=true&source%5Bsource_types%5D%5B0%5D=mp4`;
+
   return (
     <>
-      <iframe
-        title="Video Player Cloud Hosted"
-        src={`https://player.cloudinary.com/embed/?cloud_name=${props.options.cloudName}&public_id=${props.options.publicId}&&player%5Bfluid%5D=true&player%5Bcontrols%5D=true&player%5Bcontrol_bar%5D%5Bvolume_panel%5D=false&player%5Bcontrol_bar%5D%5Bfullscreen_toggle%5D=false&player%5Bposter_options%5D%5Btransformation%5D%5Bstart_offset%5D=0`}
+    <div class="iframe-container">
+      <iframe className="responsive-iframe"
+        title="Cloud Hosted Video Player"
+        src={url}
+        width="640"
+        height="480"
         allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-        allowfullscreen
-        frameborder="0"
+        allowFullScreen
+        frameBorder="0"
       ></iframe>
+      </div>
     </>
   );
 }
