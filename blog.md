@@ -1,6 +1,11 @@
 # Integrating Cloudinary Video Player into a React Application: 5 Alternatives
 
-As of this writing [npm trends](https://www.npmtrends.com/react) reports over 10,000 daily downloads of the React library. The [disruption created by Covid in 2020](https://www.weforum.org/agenda/2020/05/coronavirus-covid19-consumers-shopping-goods-economics-industry) is expected to persist. This disruption created consumer demand for video to improve work, shopping, education, healthcare, social intercourse, and entertainment.
+<iframe
+  src="https://codepen.io/team/codepen/embed/preview/PNaGbb"
+  style="width:100%; height:300px;"
+></iframe>
+
+As of this writing [npm trends](https://www.npmtrends.com/react) reports over 10,000,000 weekly downloads of the React library. The [disruption created by Covid in 2020](https://www.weforum.org/agenda/2020/05/coronavirus-covid19-consumers-shopping-goods-economics-industry) is expected to persist. This disruption created consumer demand for video to improve work, shopping, education, healthcare, social intercourse, and entertainment.
 
 It's not surprising that questions arise about how to add a video player to a React application. We'll look at 5 ways to host video with the Cloudinary Video player in a React Component.
 
