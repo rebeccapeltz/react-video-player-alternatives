@@ -31,8 +31,7 @@ function VideoPlayerContext() {
   };
 
   useEffect(() => {
-    console.log("calling useEffect");
-      
+    videoPlayerInit();  
   });
   console.log("calling fn render");
   return (
