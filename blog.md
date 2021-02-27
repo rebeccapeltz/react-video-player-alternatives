@@ -431,7 +431,7 @@ export default VideoPlayerContext;
 
 ```
 
-The fact that we don't and shouldn't change the cloud name and public id for the video indicates that using Context is not a good idea when working with the video player.  If we were to call `setVideoOptions` we would call `setVideoOptions`.  This would trigger a re-render of the `VideoPlayerContext` component because `useEffect` is run when the state is changed.  Re-rendering the component would reinitialize the video player which is not desirable. 
+When we return `useEffect`, we pass the second parameter as an empty array to avoid re-rendering.
 
 ### 5. Function based with Custom Hook
 
@@ -458,7 +458,6 @@ import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 export const useCloudinaryVideoPlayer  = (props) =>{
-  // debugger;
   const [cloudName] = useState(props.cloudName);
   const [publicId] = useState(props.publicId);
   const [className] = useState(props.videoClass);
@@ -506,7 +505,6 @@ import { useCloudinaryVideoPlayer } from "./useCloudinaryVideoPlayer";
 
 function VideoPlayerCustomHook(props) {
   const videoClass = "custom-video";
-  debugger;
   useCloudinaryVideoPlayer({ ...props.options, videoClass: videoClass });
 
   return (

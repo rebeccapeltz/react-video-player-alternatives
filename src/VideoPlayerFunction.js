@@ -9,8 +9,6 @@ function VideoPlayerFunction(props) {
     secure: true,
   });
   const videoPlayerInit = () => {
-    debugger;
-    console.log("calling debugger");
     cloudinary.videoPlayer(document.querySelector(".fn-video"), {
       publicId: props.options.publicId,
       fluid: true,
@@ -22,12 +20,8 @@ function VideoPlayerFunction(props) {
   };
 
   useEffect(() => {
-    debugger;
-    console.log("calling useEffect");
-    videoPlayerInit();
+    return (videoPlayerInit(),[]);
   });
-  debugger;
-  console.log("calling fn render");
   return (
     <>
       <video className="fn-video" />

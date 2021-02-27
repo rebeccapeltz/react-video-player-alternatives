@@ -4,7 +4,6 @@ import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 export const useCloudinaryVideoPlayer  = (props) =>{
-  // debugger;
   const [cloudName] = useState(props.cloudName);
   const [publicId] = useState(props.publicId);
   const [className] = useState(props.videoClass);
@@ -26,7 +25,7 @@ export const useCloudinaryVideoPlayer  = (props) =>{
   };
 
   useEffect(() => {
-    videoPlayerInit();
+    return(videoPlayerInit(),[]);
   });
 
   return "OK";
