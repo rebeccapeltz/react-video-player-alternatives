@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Code Sandbox
 
-A forked version of this project can be found on [codesanbox.io](https://codesandbox.io/s/confident-flower-dx5cm).
+A forked version of this project can be found on [codesanbox.io](https://codesandbox.io/s/elastic-architecture-stlk6)
 
 [Github Code](https://github.com/rebeccapeltz/react-video-player-alternatives)
 
