@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Run this code locally
+
+`npm install`
+
+`npm run start`  
+
 ## Code Sandbox
 
 A forked version of this project can be found on [codesanbox.io](https://codesandbox.io/s/confident-flower-dx5cm).
