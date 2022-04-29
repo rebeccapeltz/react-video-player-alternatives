@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Cloudinary } from "cloudinary-core";
 import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
@@ -8,13 +7,11 @@ export const useCloudinaryVideoPlayer  = (props) =>{
   const [publicId] = useState(props.publicId);
   const [className] = useState(props.videoClass);
 
-  const cloudinary = new Cloudinary({
-    cloud_name: cloudName,
-    secure: true,
-  });
+
 
   const videoPlayerInit = () => {
-    return cloudinary.videoPlayer(document.querySelector(`.${className}`), {
+    return window.cloudinary.videoPlayer(document.querySelector(`.${className}`), {
+      cloud_name: cloudName,
       publicId: publicId,
       fluid: true,
       controls: true,

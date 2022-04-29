@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "cloudinary-core": "^2.11.3",
-    "cloudinary-video-player": "^1.5.1",
+    "cloudinary-video-player": "^1.9.1",
     "progress-bar-webpack-plugin": "^2.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

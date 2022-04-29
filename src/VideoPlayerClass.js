@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import { Cloudinary } from "cloudinary-core";
 import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 class VideoPlayerClass extends Component {
-  cld = () => {
-    return new Cloudinary({ cloud_name: this.props.options.cloudName, secure: true });
-  };
   videoPlayerInit = () => {
-    const cld = this.cld();
-    cld.videoPlayer("some-video", {
+    window.cloudinary.videoPlayer("some-video", {
+      cloud_name: this.props.options.cloudName,
       publicId: this.props.options.publicId,
       fluid: true,
       controls: true,

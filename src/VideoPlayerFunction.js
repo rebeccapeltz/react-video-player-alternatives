@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
-import { Cloudinary } from "cloudinary-core";
 import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 function VideoPlayerFunction(props) {
-  const cloudinary = new Cloudinary({
-    cloud_name: props.options.cloudName,
-    secure: true,
-  });
   const videoPlayerInit = () => {
-    cloudinary.videoPlayer(document.querySelector(".fn-video"), {
+    window.cloudinary.videoPlayer(document.querySelector(".fn-video"), {
+      cloud_name: props.options.cloudName,
       publicId: props.options.publicId,
       fluid: true,
       controls: true,

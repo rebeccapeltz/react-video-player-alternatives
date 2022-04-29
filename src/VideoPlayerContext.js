@@ -1,21 +1,17 @@
 import React, { useEffect, useContext } from "react";
 import { VideoOptionsContext } from "./VideoOptionsContext";
-import { Cloudinary } from "cloudinary-core";
 import "cloudinary-video-player/dist/cld-video-player.light.min";
 import "cloudinary-video-player/dist/cld-video-player.light.min.css";
 
 function VideoPlayerContext() {
   const options = useContext(VideoOptionsContext);
 
-  const cloudinary = new Cloudinary({
-    cloud_name: options.videoOptions.cloudName,
-    secure: true,
-  });
   const videoPlayerInit = () => {
     console.log("add video player JS");
-    const player = cloudinary.videoPlayer(
+    const player = window.cloudinary.videoPlayer(
       document.querySelector(".context-video"),
       {
+        cloud_name:options.videoOptions.cloudName,
         publicId: options.videoOptions.publicId,
         fluid: true,
         controls: true,
